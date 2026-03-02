@@ -35,9 +35,9 @@ Always refer to the [official online documentation](https://bellplay.net) for an
 | Type         | Description                                                                            | Examples                                                                                                    |
 | ------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **Integer**  | Whole numbers                                                                          | `60`, `-7`                                                                                                  |
-| **Float**    | Decimal numbers (also called `real`)                                                   | `440.0`, `0.5`, `1e-3`                                                                                      |
-| **Rational** | Fractions (ideal for rhythms)                                                          | `1/4`, `3/2`                                                                                                |
-| **Pitch**    | [Scientific Pitch Notation](https://en.wikipedia.org/wiki/Scientific_pitch_notation)   | `C5` (Middle C), `F#4`, `Bb3`, `Gq3`                                                                        |
+| **Float**    | Floating-point (or decimal) numbers                                                    | `440.0`, `.5`, `1.` `1e-3`                                                                                  |
+| **Rational** | Fractional numbers                                                                     | `1/4`, `3/2`                                                                                                |
+| **Pitch**    | [Scientific pitch notation](https://en.wikipedia.org/wiki/Scientific_pitch_notation)   | `C5` (Middle C), `F#4`, `Bb3`, `Gq3`                                                                        |
 | **Symbol**   | The _bell_ version of a _string_ in other programming languages. Useful for text data. | `"hello world"` (double-quotes) `'hello world'` (single quotes) `` `hello `` (back-tick, no spaces allowed) |
 
 - **Pitch Accidentals**: `#` (sharp), `b` (flat), `q` (quarter-sharp), `d` (quarter-flat), `^` (eighth-sharp), `v` (eighth-flat)
@@ -67,7 +67,7 @@ _bell_ automatically applies operations across lists, saving you from writing ma
 
 ### Control flow
 
-- **Conditionals**: `if <condition> then ( <action> ) else ( <action> )`.
+- **Conditionals**: `if <condition> then <action> else <action>`.
 - **Loops**:
 - `for $item in $list collect ( $item + 12 )` (executes and collects the result of each iteration).
 - `for $item in $list do ( print($item) )` (executes and keeps the result of the very last iteration).
@@ -87,9 +87,9 @@ Every _bellplay~_ script generally follows this three-step sequence:
 ### Loading & creating audio
 
 - **Import**: `$buffer = importaudio('guitar.wav');`.
-- **Oscillators**: `cycle()`, `saw()`, `tri()`, `rect()`, `noise()`, `simplefm()`.
-- **Sampling** (advanced): `$pluck = ezsampler(c5, 1000)`
-- **Attributes**: Most generators use `@frequency` (Hz) and `@duration` (ms).
+- **Oscillator functions**: `cycle()`, `saw()`, `tri()`, `rect()`, `noise()`, `simplefm()`.
+- **Sampling** (more advanced): `$pluck = ezsampler(c5, 1000)`
+- **Attributes**: Most oscillator functions use `@frequency` (Hz) and `@duration` (ms).
 - _Example_: `$sound = cycle(@frequency 440 @duration 1000);`.
 
 ### The _bellplay~_ timeline
@@ -97,16 +97,16 @@ Every _bellplay~_ script generally follows this three-step sequence:
 Buffers must be _transcribed_ to be heard. The `transcribe()` function places a buffer on a global timeline.
 
 - **Common Attributes**:
-- `@onset`: Start time in ms (default is 0).
-- `@gain`: Linear gain (0.0 to 1.0) or an envelope.
-- `@pan`: Stereo position (0 = left, 0.5 = center, 1 = right).
+- `@onset`: Start time in ms (default is `0`).
+- `@gain`: Linear gain (`0.0` to `1.0`) or an envelope.
+- `@pan`: Stereo position (`0` = _left_, `0.5` = _center_, `1` = _right_).
 - _Example_: `transcribe(@buffer $b @onset 500 @gain 0.5 @pan 0.2);`.
 
-### Buffer processing & fx
+### Buffer processing operations
 
-Use `process()` to apply effects to a buffer before transcribing it.
+Use `process()` to apply effects to a buffer. Process takes a buffer and a list of operations, which are generated via functions (think of them as recipes for `process` to know what to do to the buffer).
 
-- **Common processes**: `gain()`, `biquad()` (filters), `resample()`, `waveshape()`, `window()`, `fade()`.
+- **Common processes**: `normalize()`, `gain()`, `window()`, `freeverb()`, `resample()`, `overdrive()`, `biquad()`.
 - **Example**: `$b.process(gain(0.5) window())`.
 
 ### Audio analysis
@@ -127,14 +127,6 @@ The `render()` function executes the transcription and can apply processing to t
 - `@reset 1`: Clears the timeline after rendering. Useful when doing batch rendering, or multi-pass rendering.
 - _Example_: `$finalbuf = render(@play 1 @process normalize(-3) freeverb())`.
 
-### Essential utilities
-
-- **Breakpoints (BPF)**: Defined as `[time value slope]` triplets. Used for envelopes and automation.
-- **Conversions**:
-- `mc2f($midi)` / `f2mc($hz)`: MIDI cents to Frequency and vice-versa.
-- `c2r($cents)`: Cents to playback ratio.
-- `x2dx($list)`: Converts absolute times to durations (inter-onset intervals).
-
 ---
 
 ## Tips and common mistakes
@@ -142,4 +134,5 @@ The `render()` function executes the transcription and can apply processing to t
 - **Missing semi-colons**: always check for missing semicolons in your code, which may lead to unexpected behavior or errors.
 - **Mispelled functions**: make sure the functions you're using actually exist.
 - **Namespacing** _bellplay~_ functions like `saw()` and `render()` are not reserved keywords; if you name a variable `render = 10`, you will "break" the function and won't be able to use it until you restart.
+- **Multi-buffer transciption**: The `transcribe` buffer can only transcribe one buffer at a time. To transcribe multiple buffer, make use of `for` or `while` loops.
 - **Misusing functions**: When in doubt, always check the [reference documentation](https://bellplay.net/docs/reference/buffer-utilities/transcribe) and make sure you understand which arguments a function expects to behave as expected.
