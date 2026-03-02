@@ -1,0 +1,9 @@
+## step 1: generation
+$buf = cycle(@frequency 440 @duration 100);
+## $buf = importaudio('flute.wav');
+## step 2: transcription
+transcribe($buf, 0);
+transcribe($buf, 2000 @gain 0.1);
+transcribe($buf, 1000 @detune 700);
+## step 3: rendering
+render(@play 1)

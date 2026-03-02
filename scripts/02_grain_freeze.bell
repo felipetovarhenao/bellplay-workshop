@@ -1,0 +1,24 @@
+## import (built-in) file 
+$buf = importaudio('singing.wav');
+view($buf, 'my buffer');
+## set offset to 2 seconds into the initial buffer
+$grain = setkey($buf, 'offset', 2000);
+## set duration to 1/5 second
+$grain = setkey($grain, 'duration', 200);
+## visualize buffer
+view($grain, 'my grain');
+$onset = 0;
+## transcribe grain multiple times
+for $i in 1...100 do (
+    ## transcribe the same grain buffer, with random panning
+    transcribe(
+        @buffer $grain
+        @onset $onset
+        @pan rand(0, 1) 
+    );
+    ## increase onset by a random amount
+    $onset += rand(20, 50) 
+);
+render(
+    @play 1 @process freeverb(@roomsize 0.9) 
+)

@@ -1,0 +1,44 @@
+## input buffer to granulate
+$buf = importaudio('singing.wav');
+## grain duration
+$graindur = 100;
+## grain overlap factor
+$overlap = 4;
+## auto-generate segments from buffer given a constant segment duration and overlap
+$grains = splitbuf(
+    @buffer $buf
+    @split $graindur
+    @overlap 4
+);
+## iterate through grains and analyze them
+$grains = for $grain in $grains collect analyze($grain, pitchmelodia() larm());
+## sort grains based on value associated with "larm" (long term loudness) key
+$grains = sortbykeys($grains, 'larm');
+## pitches to retune grains to
+$scale = c5 d5 e5 g5 a5;
+## initialize onset time
+$onset = 0;
+## iterate through generated grains
+for $grain in $grains do (
+    ## get pitch analysis result
+    $pitch = getkey($grain, 'pitchmelodia');
+    ## compute interval between pitch and closest pitch in scale
+    $interval = pitchdiff($pitch, $scale);
+    transcribe(
+        @buffer $grain
+        @onset $onset
+        ## apply detuning (in cents)
+        @detune $interval
+        @pan rand(0, 1) 
+        ## optional: use pitch analysis result to determine notated pitch in timeline
+        @pitchkey 'pitchmelodia' 
+        ## more percussive envelope
+        @gain [0 1 0] [1 0 0.125] 
+    );
+    ## update onset variable
+    $timestep = $graindur / $overlap;
+    $onset += $timestep
+);
+render(
+    @play 1 @process freeverb(@roomsize 0.9 @wet 0.0125) normalize(-6) 
+)

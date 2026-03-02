@@ -1,0 +1,29 @@
+## input buffer to granulate
+$buf = importaudio('singing.wav');
+## grain duration
+$graindur = 100;
+## grain overlap factor
+$overlap = 4;
+## auto-generate segments from buffer given a constant segment duration and overlap
+$grains = splitbuf(
+    @buffer $buf
+    @split $graindur
+    @overlap 4
+);
+## initialize onset time
+$onset = 0;
+## iterate through generated grains
+for $grain in scramble($grains) do (
+    transcribe(
+        @buffer $grain
+        @onset $onset
+        @pan rand(0, 1) 
+        @gain [0 0 0] [0.5 1 -0.25] [1 0 0.25] 
+    );
+    ## update onset variable
+    $timestep = $graindur / $overlap;
+    $onset += $timestep
+);
+render(
+    @play 1 @process freeverb(@roomsize 0.9 @wet 0.0125) normalize(-6) 
+)
