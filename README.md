@@ -136,3 +136,10 @@ The `render()` function executes the transcription and can apply processing to t
 - **Namespacing** _bellplay~_ functions like `saw()` and `render()` are not reserved keywords; if you name a variable `render = 10`, you will "break" the function and won't be able to use it until you restart.
 - **Multi-buffer transciption**: The `transcribe` buffer can only transcribe one buffer at a time. To transcribe multiple buffer, make use of `for` or `while` loops.
 - **Misusing functions**: When in doubt, always check the [reference documentation](https://bellplay.net/docs/reference/buffer-utilities/transcribe) and make sure you understand which arguments a function expects to behave as expected.
+
+---
+
+## Resources
+
+- [**Bell programming tutorials**](https://felipe-tovar-henao.com/bell-tutorials/)
+- [**Replay: Algorithmic music puzzles**](https://felipe-tovar-henao.com/replay/)
