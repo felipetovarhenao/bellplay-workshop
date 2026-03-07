@@ -21,6 +21,10 @@ To install _bellplay~_ for this workshop, please follow these steps:
 2. Download [Visual Studio Code](https://code.visualstudio.com/). This is the text-editor application we will use to write all of our code.
 3. Please follow the instructions in [this website](https://bellplay.net/docs/installation), with the only difference being that the _bellplay~_ version should be the pre-release you downloaded above, instead of the one it links to in the website. Make sure you also follow the [instructions](https://bellplay.net/docs/installation/#text-editor-setup-recommended) _in full_, on how to setup [Visual Studio Code](https://code.visualstudio.com/) (i.e., installing all the required extensions).
 
+### Troubleshooting
+
+If you happen to run into any technical issues, either before or after the workshop, please feel free to post your questions in this channel or send me a DM.
+
 ---
 
 ## Documentation
