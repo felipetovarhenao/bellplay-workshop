@@ -1,12 +1,25 @@
 # Introduction to algorithmic audio with _bellplay~_
 
+## General info
+
+**Location**: Room 120 (Arts Incubator—right accross of the _Concert 2_ black-box theatre)
+**Time**: March 7, 4:00-5:30pm
+
+## Requirements
+
+- **Personal headphones**
+
+### Optional
+
+- **Personal laptop** (_Optional_): This workshop will take place in a computer lab, with all machines running on MacOS. If you prefer Windows, or simply prefer bringing your own laptop, please make sure to _very carefully_ follow the **Setup** instructions below, so that you're all set up **before** we start.
+
 ## Setup
 
-To install _bellplay~_ for this workshop, follow these steps:
+To install _bellplay~_ for this workshop, please follow these steps:
 
-1. Download the [bellplay~ pre-release version](https://github.com/felipetovarhenao/bellplay/releases/dev)—this is the version we will be using for the workshop, not the version available in the website below.
-2. Download [Visual Studio Code](https://code.visualstudio.com/)
-3. Please follow the instructions in [this website](https://bellplay.net/docs/installation), with the only difference being that the _bellplay~_ version should be the pre-release you downloaded above, instead of the one it links to in the website. Make sure you also follow the [instructions](https://bellplay.net/docs/installation/#text-editor-setup-recommended) on how to setup [Visual Studio Code](https://code.visualstudio.com/).
+1. Download the [bellplay~ pre-release version](https://github.com/felipetovarhenao/bellplay/releases/dev)—this is the version we will be using for the workshop, not the version available in the main website.
+2. Download [Visual Studio Code](https://code.visualstudio.com/). This is the text-editor application we will use to write all of our code.
+3. Please follow the instructions in [this website](https://bellplay.net/docs/installation), with the only difference being that the _bellplay~_ version should be the pre-release you downloaded above, instead of the one it links to in the website. Make sure you also follow the [instructions](https://bellplay.net/docs/installation/#text-editor-setup-recommended) _in full_, on how to setup [Visual Studio Code](https://code.visualstudio.com/) (i.e., installing all the required extensions).
 
 ---
 
